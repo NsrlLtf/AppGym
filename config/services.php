@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'device' => [
+        'api_key' => 'wJNnxHjmVrd1BDQHon6SwE7IWHHeuSQs',
+    ],
+
 ];

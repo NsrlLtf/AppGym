@@ -32,17 +32,17 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{id}', [AuthController::class, 'deleteAdmin']);
         });
 
-        // Webhook Management (webhooks store,index,logs/1 DONE )
-        // Route::prefix('webhooks')->group(function () {
-        //     Route::get('/', [WebhookController::class, 'index']);
-        //     Route::post('/', [WebhookController::class, 'store']);
-        //     Route::get('/{webhook}', [WebhookController::class, 'show']);
-        //     Route::put('/{webhook}', [WebhookController::class, 'update']);
-        //     Route::delete('/{webhook}', [WebhookController::class, 'destroy']);
-        //     Route::get('/logs', [WebhookController::class, 'logs']);
-        //     Route::get('/logs/{webhookId}', [WebhookController::class, 'webhookLogs']);
-        //     Route::post('/test/{webhook}', [WebhookController::class, 'test']);
-        // });
+        //Webhook Management (webhooks store,index,logs/1 DONE )
+        Route::prefix('webhooks')->group(function () {
+            Route::get('/', [WebhookController::class, 'index']);
+            Route::post('/', [WebhookController::class, 'store']);
+            Route::get('/{webhook}', [WebhookController::class, 'show']);
+            Route::put('/{webhook}', [WebhookController::class, 'update']);
+            Route::delete('/{webhook}', [WebhookController::class, 'destroy']);
+            Route::get('/logs', [WebhookController::class, 'logs']);
+            Route::get('/logs/{webhookId}', [WebhookController::class, 'webhookLogs']);
+            Route::post('/test/{webhook}', [WebhookController::class, 'test']);
+        });
     });
 
     // Route untuk Admin dan Superadmin (get, get{1}, DONE)
