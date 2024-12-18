@@ -165,7 +165,8 @@ POST http://127.0.0.1:8000/api/v1/auth/login
 {
     "name": "member",
     "email": "member@coboy.com",
-    "password": "456789"
+    "password": "456789",
+    "role": "member"
 }
 
 Setelah login dengan member kita akan mendapatkan kartu member yang sudah kita buat methodnya di MemberController dengan nama RF_id_card
