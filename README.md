@@ -65,20 +65,21 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-Tutorial Run Program
+## Tutorial Run Program
 
 <P> Sistem Gym yang memakai kartu untuk melakukan check in dan check out sebagai M2M utama </p>
 
 Untuk menjalankan program harus menginstall beberapa tools dan migrate Seeder dari paket gym dan superadmin untuk akses awal dan generate api key.
-
+ganti menjadi .env
 buat juga database dan konfigurasikan dengan .env 
 
 php artisan composer install
-php artisan serve 
-php artisan migrate
+php artisan composer update
 php artisan db:seed --class=PaketGym
 php artisan db:seed --classSuperAdminSeeder
 php artisan app:generate-api-key "Device Admin"
+php artisan migrate
+php artisan serve
 
 
  
@@ -94,9 +95,10 @@ POST http://127.0.0.1:8000/api/v1/auth/login
 ## Body jika menggunakan postman taruh di dalam RAW
 ## Login SuperAdmin
 {
-    "name": "Superadmin"
-    "email": "superadmin@coboy.com"
-    "password": "12345678"
+    "name": "Superadmin",
+    "email": "superadmin@coboy.com",
+    "password": "12345678",
+    "role" : "superadmin"
 }
 
 setelah login dengan superadmin langkah selanjutnya adalah dengan membuat register admin dengan route api sebagai berikut
@@ -108,11 +110,11 @@ POST http://127.0.0.1:8000/api/v1/auth/register/admin
 
 ## Register Admin 
 {
-    "name": "admin1"
-    "email": "admin1@coboy.com"
-    "password": "12345678"
-    "password_confirmation": "12345678"
-    "role": "admin"
+    "name": "admin1",
+    "email": "admin1@coboy.com",
+    "password": "12345678",
+    "password_confirmation": "12345678",
+    "role": "admin",
 }
 
 Setelah berhasil maka kita bisa login dengan menggunakan admin yang sudah di buat dengan akun superadmin tadi dan route login masih sama dengan route login yang superadmin gunakan
@@ -124,9 +126,10 @@ POST http://127.0.0.1:8000/api/v1/auth/login
 
 ## Body
 {
-    "name": "admin1"
-    "email": "admin1@coboy.com"
-    "password": "12345678"
+    "name": "admin1",
+    "email": "admin1@coboy.com",
+    "password": "12345678",
+    "role" : "admin"
 } 
 
 Setelah login dengan akun admin kita bisa melakukan langkah selanjutnya dengan register member yang akan mendaftar dengan langkah sebagai berikut alert!!! "kita hanya bisa mendaftarkan member dengan menggunakan akun admin atau superadmin"
@@ -160,8 +163,8 @@ POST http://127.0.0.1:8000/api/v1/auth/login
 
 ## Body 
 {
-    "name": "member"
-    "email": "member@coboy.com"
+    "name": "member",
+    "email": "member@coboy.com",
     "password": "456789"
 }
 
