@@ -40,19 +40,23 @@ Route::prefix('v1')->group(function () {
         });
 
         //Webhook Management (webhooks store,index,logs/1 DONE )
-        Route::prefix('webhooks')->group(function () {
-            Route::get('/', [WebhookController::class, 'index']);
-            Route::post('/', [WebhookController::class, 'store']);
-            Route::get('/{webhook}', [WebhookController::class, 'show']);
-            Route::put('/{webhook}', [WebhookController::class, 'update']);
-            Route::delete('/{webhook}', [WebhookController::class, 'destroy']);
-            Route::get('/logs', [WebhookController::class, 'logs']);
-            Route::get('/logs/{webhookId}', [WebhookController::class, 'webhookLogs']);
-            Route::post('/test/{webhook}', [WebhookController::class, 'test']);
-        });
+        // Route::prefix('webhooks')->group(function () {
+        //     Route::get('/', [WebhookController::class, 'index']);
+        //     Route::post('/', [WebhookController::class, 'store']);
+        //     Route::get('/{webhook}', [WebhookController::class, 'show']);
+        //     Route::put('/{webhook}', [WebhookController::class, 'update']);
+        //     Route::delete('/{webhook}', [WebhookController::class, 'destroy']);
+        //     Route::get('/logs', [WebhookController::class, 'logs']);
+        //     Route::get('/logs/{webhookId}', [WebhookController::class, 'webhookLogs']);
+        //     Route::post('/test/{webhook}', [WebhookController::class, 'test']);
+        // });
     });
 
     // Route untuk Admin dan Superadmin (get, get{1}, DONE)
+    // get http://127.0.0.1:8000/api/v1/admin/members       Mengambil semua member
+    // get http://127.0.0.1:8000/api/v1/admin/members/1     Mengambil member tertentu
+    // put http://127.0.0.1:8000/api/v1/admin/members/1     Mengubah member tertentu
+    // delete http://127.0.0.1:8000/api/v1/admin/members/1  Menghapus member tertentu
     Route::middleware(['auth:sanctum', 'role:admin,superadmin'])->prefix('admin')->group(function () {
         Route::get('/members', [MemberController::class, 'getAllMembers']);
         Route::get('/members/{id}', [MemberController::class, 'getMember']);
@@ -64,7 +68,7 @@ Route::prefix('v1')->group(function () {
         // http://127.0.0.1:8000/api/v1/admin/reports/gym-usage Melihat report gym terbanyak
         // http://127.0.0.1:8000/api/v1/admin/reports/revenue  Melihat total Penghasilan setiap hari dari gym
         Route::prefix('reports')->group(function () {
-            Route::get('/membership', [MemberController::class, 'membershipReport']);
+            Route::get('/membership', [MemberController::class, 'membershipReport']); 
             Route::get('/gym-usage', [SesiGymController::class, 'gymUsageReport']);
             Route::get('/revenue', [TransaksiMemberController::class, 'revenueReport']);
         });
@@ -73,16 +77,20 @@ Route::prefix('v1')->group(function () {
     });
 
     // Route untuk Member (get profile DONE)
+    // http://127.0.0.1:8000/api/v1/members/profile          Mengambil profile member
+    // http://127.0.0.1:8000/api/v1/members/profile          Mengubah profile member
+    // http://127.0.0.1:8000/api/v1/members/activity-report/1 Mengambil report aktivitas member
+    // http://127.0.0.1:8000/api/v1/members/transactions    Mengambil riwayat transaksi
     Route::middleware(['auth:sanctum'])->prefix('members')->group(function () {
-        Route::get('/profile', [MemberController::class, 'getProfile']);
+        Route::get('/profile', [MemberController::class, 'getProfile']); 
         Route::put('/profile', [MemberController::class, 'updateProfile']);
         Route::get('/activity-report/{memberId}', [MemberController::class, 'memberActivityReport']);
         Route::get('/transactions', [TransaksiMemberController::class, 'memberTransactionHistory']);
     });
 
     // Route untuk Gym Sessions ( occupany & history Done )
-    // http://127.0.0.1:8000/api/v1/gym-sessions/history
-    // http://127.0.0.1:8000/api/v1/gym-sessions/occupancy
+    // http://127.0.0.1:8000/api/v1/gym-sessions/history     Mengambil riwayat sesi gym sebelumnya
+    // http://127.0.0.1:8000/api/v1/gym-sessions/occupancy    Mengambil kapasitas gym saat sedang di gunakan member
     Route::middleware(['auth:sanctum'])->prefix('gym-sessions')->group(function () {
         Route::get('/history', [SesiGymController::class, 'sessionHistory']);
         Route::get('/occupancy', [SesiGymController::class, 'getCurrentOccupancy']);
@@ -90,16 +98,16 @@ Route::prefix('v1')->group(function () {
 
     // Route untuk Transaksi Membership (renew & packages DONE)
     // Untuk tets di Postman atau rester 
-    // http://127.0.0.1:8000/api/v1/membership/packages
-    // http://127.0.0.1:8000/api/v1/membership/renew
+    // http://127.0.0.1:8000/api/v1/membership/packages     Mengambil semua paket membership
+    // http://127.0.0.1:8000/api/v1/membership/renew         Mengambil semua paket membership
     Route::middleware(['auth:sanctum', 'role:admin,superadmin'])->prefix('membership')->group(function () {
         Route::post('/renew', [TransaksiMemberController::class, 'renewMembership']);
         Route::get('/packages', [TransaksiMemberController::class, 'getMembershipPackages']);
     });
 
     // Route untuk RFID Device with API Key (DONE)
-    // http://127.0.0.1:8000/api/v1/device/check-out
-    // http://127.0.0.1:8000/api/v1/device/check-in
+    // http://127.0.0.1:8000/api/v1/device/check-out   tanda check out member keluar
+    // http://127.0.0.1:8000/api/v1/device/check-in    tanda check in member masuk
     Route::middleware(['api.key'])->group(function () {
         Route::post('/device/check-in', [SesiGymController::class, 'checkIn']);
         Route::post('/device/check-out', [SesiGymController::class, 'checkOut']);

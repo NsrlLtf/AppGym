@@ -173,6 +173,11 @@ Setelah login dengan member kita akan mendapatkan kartu member yang sudah kita b
 dan kita akan melakukan bagian paling pentig yang akan membuat App ini menggunakan konsep machine to machine dengan tap in kartu agar member bisa di katakan hadir di sesigym. pertama tama kita akan melakukan generate api key untuk akses kartu tersebut ke server dengan langkah. "rfid_card": "RFID-67605F2AC9F9E" itu adalah hasil dari kita mendaftarkan member akan muncul di bagian json
 php artisan app:generate-api-key "Device Admin" dengan kita menyimpannya dulu di notepad.
 
+Sebelum memulai test pergi ke Config/services.php lihat di bagian ini
+     'device' => [
+        'api_key' => 'wJNnxHjmVrd1BDQHon6SwE7IWHHeuSQs', // ubah menjadi api key yang sudah kalian generate tadi
+    ],
+
 ## Check-in Kartu Member 
 POST http://127.0.0.1:8000/api/v1/device/check-in
     Header 
@@ -182,7 +187,7 @@ POST http://127.0.0.1:8000/api/v1/device/check-in
 
 ## Body
     {
-        "rfid_card": "RFID-67605F2AC9F9E"
+        "rfid_card": "RFID-67605F2AC9F9E" // di bagian data base kalian melihat di tabel member cari di cari kolom rfid_card_number
     }
 
 Setelah kita melakukan check-in kita bisa check-out setelah member menyelesaikan kegiatannya di gym

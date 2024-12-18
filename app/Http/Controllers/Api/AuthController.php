@@ -19,25 +19,25 @@ class AuthController extends Controller
     public function registerAdminUser(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:admin'
+            'name' => 'required|string|max:255', // Validasi nama
+            'email' => 'required|email|unique:users,email', // Validasi email unik
+            'password' => 'required|string|min:8|confirmed', // Validasi password
+            'role' => 'required|in:admin' // Validasi role
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
+            return response()->json(['errors' => $validator->errors()], 400); 
         }
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role
+        $user = User::create([ // Membuat user baru
+            'name' => $request->name,  // Menyimpan nama
+            'email' => $request->email, // Menyimpan email
+            'password' => Hash::make($request->password), // Menyimpan password
+            'role' => $request->role // Menyimpan role
         ]);
 
         return response()->json([
-            'message' => 'Admin berhasil didaftarkan',
+            'message' => 'Admin berhasil didaftarkan', // Mengembalikan pesan sukses
             'user' => $user
         ], 201);
     }
@@ -47,29 +47,29 @@ class AuthController extends Controller
      */
     public function getAllAdmins()
     {
-        $admins = User::where('role', 'admin')->get();
+        $admins = User::where('role', 'admin')->get(); // Mengambil semua admin
         return response()->json(['admins' => $admins]);
     }
 
     /**
      * Update Admin (Untuk Superadmin)
      */
-    public function updateAdmin(Request $request, $id)
+    public function updateAdmin(Request $request, $id) // Memperbarui admin
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
+        $validator = Validator::make($request->all(), [ // Validasi input
+            'name' => 'required|string|max:255', // Validasi nama
+            'email' => 'required|email|unique:users,email,' . $id, //  Validasi email unik
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        $admin = User::findOrFail($id);
-        $admin->update($request->all());
+        $admin = User::findOrFail($id); // Mencari admin berdasarkan ID
+        $admin->update($request->all()); // Memperbarui admin
 
         return response()->json([
-            'message' => 'Data admin berhasil diperbarui',
+            'message' => 'Data admin berhasil diperbarui', // Mengembalikan pesan sukses
             'admin' => $admin
         ]);
     }
@@ -77,9 +77,9 @@ class AuthController extends Controller
     /**
      * Delete Admin (Untuk Superadmin)
      */
-    public function deleteAdmin($id)
+    public function deleteAdmin($id) // Menghapus admin
     {
-        $admin = User::findOrFail($id);
+        $admin = User::findOrFail($id); // Mencari admin berdasarkan ID
         $admin->delete();
 
         return response()->json([

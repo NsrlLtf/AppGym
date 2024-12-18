@@ -21,11 +21,11 @@ class TransaksiMemberController extends Controller
         $this->middleware(['auth:sanctum', 'role:admin,superadmin'])->only(['renewMembership']);
     }
 
-    public function renewMembership(Request $request)
+    public function renewMembership(Request $request) // Memoerbarui Paket Membership
     {
         // Tambahkan validasi untuk memastikan yang login adalah admin
-        if (!auth()->user() || !in_array(auth()->user()->role, ['admin', 'superadmin'])) {
-            return response()->json(['message' => 'Unauthorized. Only admin can perform this action.'], 403);
+        if (!auth()->user() || !in_array(auth()->user()->role, ['admin', 'superadmin'])) { // Memeriksa peran pengguna
+            return response()->json(['message' => 'Unauthorized. Only admin can perform this action.'], 403); // Mengembalikan pesan kesalahan
         }
 
         $validator = Validator::make($request->all(), [
