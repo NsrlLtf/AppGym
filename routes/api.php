@@ -94,7 +94,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum'])->prefix('gym-sessions')->group(function () {
         Route::get('/history', [SesiGymController::class, 'sessionHistory']);
         Route::get('/occupancy', [SesiGymController::class, 'getCurrentOccupancy']);
-    });
+    }); // nomor 3 end oint di fitur sesigymcontroller
 
     // Route untuk Transaksi Membership (renew & packages DONE)
     // Untuk tets di Postman atau rester 
@@ -102,8 +102,8 @@ Route::prefix('v1')->group(function () {
     // http://127.0.0.1:8000/api/v1/membership/renew         Mengambil semua paket membership
     Route::middleware(['auth:sanctum', 'role:admin,superadmin'])->prefix('membership')->group(function () {
         Route::post('/renew', [TransaksiMemberController::class, 'renewMembership']);
-        Route::get('/packages', [TransaksiMemberController::class, 'getMembershipPackages']);
-    });
+        Route::get('/packages', [TransaksiMemberController::class, 'getMembershipPackages']); 
+    }); // nomor 2 end oint di fitur transaksimembercontroller
 
     // Route untuk RFID Device with API Key (DONE)
     // http://127.0.0.1:8000/api/v1/device/check-out   tanda check out member keluar
@@ -111,7 +111,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware(['api.key'])->group(function () {
         Route::post('/device/check-in', [SesiGymController::class, 'checkIn']);
         Route::post('/device/check-out', [SesiGymController::class, 'checkOut']);
-    });
+    }); //  nomor 1 end point di fitur sesicontroller 
 
     
     // Fallback route ( Jika mendapatkan endpoint yang tidak ada )

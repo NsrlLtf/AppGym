@@ -65,7 +65,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## Tutorial Run Program
+## Tutorial Run Program APPGYM
 
 <P> Sistem Gym yang memakai kartu untuk melakukan check in dan check out sebagai M2M utama </p>
 
@@ -76,7 +76,7 @@ buat juga database dan konfigurasikan dengan .env
 php artisan composer install
 php artisan composer update
 php artisan db:seed --class=PaketGym
-php artisan db:seed --classSuperAdminSeeder
+php artisan db:seed --classSuper=AdminSeeder
 php artisan app:generate-api-key "Device Admin"
 php artisan migrate
 php artisan serve
