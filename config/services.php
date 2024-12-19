@@ -32,7 +32,7 @@ return [
     ],
 
     'device' => [
-        'api_key' => 'wJNnxHjmVrd1BDQHon6SwE7IWHHeuSQs',
+        'api_key' => 'JSReGKGJsnbCf41KscekLnuXj3W2V4tV',
     ],
 
 ];

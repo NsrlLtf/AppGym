@@ -68,7 +68,7 @@ class SesiGymController extends Controller
 
         $activeSession = SesiGym::where('member_id', $member->id) // Mencari sesi gym yang masih aktif untuk anggota tersebut
                                ->whereNull('check_out_time') // Memeriksa apakah ada sesi yang belum di-check-out
-                               ->first(); 
+                               ->first();  // Mengambil id yang  di inginkan 
 
         if (!$activeSession) {
             return response()->json(['message' => 'Tidak Ada sesi Aktif'], 400);
@@ -138,31 +138,4 @@ class SesiGymController extends Controller
         ]);
     }
 
-    public function forceCheckOut(Request $request, $sessionId)
-    {
-        $session = SesiGym::findOrFail($sessionId);
-        
-        if ($session->check_out_time) {
-            return response()->json(['message' => 'Session already checked out'], 400);
-        }
-
-        $session->update([
-            'check_out_time' => now(),
-            'total_duration' => now()->diffInMinutes($session->check_in_time),
-            'status' => 'force_completed',
-            'force_checkout_reason' => $request->reason,
-            'force_checkout_by' => auth()->id()
-        ]);
-
-        // Kirim notifikasi webhook untuk force check-out
-        $this->webhookService->sendNotification('member.force_checkout', [
-            'member_id' => $session->member_id,
-            'session_id' => $session->id,
-            'reason' => $request->reason,
-            'checkout_time' => $session->check_out_time,
-            'duration' => $session->total_duration
-        ]);
-
-        return response()->json(['session' => $session]);
-    }
 }

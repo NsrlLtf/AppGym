@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('api_keys', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable(); // Nama identitas API Key
-            $table->string('key')->unique(); // API Key unik
+            $table->string('name')->nullable();
+            $table->string('key')->unique();
             $table->boolean('is_active')->default(true);
             $table->integer('usage_count')->default(0);
             $table->timestamp('last_used_at')->nullable();
-            $table->unsignedBigInteger('created_by')->nullable(); // Siapa yang membuat
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
     }

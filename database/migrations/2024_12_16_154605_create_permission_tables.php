@@ -25,24 +25,21 @@ return new class extends Migration
         }
 
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
-            //$table->engine('InnoDB');
-            $table->bigIncrements('id'); // permission id
-            $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
-            $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('guard_name');
             $table->timestamps();
-
             $table->unique(['name', 'guard_name']);
         });
 
         Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {
-            //$table->engine('InnoDB');
             $table->bigIncrements('id'); // role id
-            if ($teams || config('permission.testing')) { // permission.testing is a fix for sqlite testing
+            if ($teams || config('permission.testing')) {
                 $table->unsignedBigInteger($columnNames['team_foreign_key'])->nullable();
                 $table->index($columnNames['team_foreign_key'], 'roles_team_foreign_key_index');
             }
-            $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
-            $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
+            $table->string('name');
+            $table->string('guard_name');
             $table->timestamps();
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);
@@ -59,7 +56,7 @@ return new class extends Migration
             $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_permissions_model_id_model_type_index');
 
             $table->foreign($pivotPermission)
-                ->references('id') // permission id
+                ->references('id')
                 ->on($tableNames['permissions'])
                 ->onDelete('cascade');
             if ($teams) {
@@ -72,7 +69,6 @@ return new class extends Migration
                 $table->primary([$pivotPermission, $columnNames['model_morph_key'], 'model_type'],
                     'model_has_permissions_permission_model_type_primary');
             }
-
         });
 
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
