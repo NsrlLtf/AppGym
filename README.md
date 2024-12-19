@@ -154,5 +154,6 @@ POST http://127.0.0.1:8000/api/v1/device/check-out
 
 ## Body
     {
-        "rfid_card": "RFID-67605F2AC9F9E"
+        "rfid_card": "RFID-6763C0FBE580C"
     }
+ZapaC8g4IRTMyxvzdqd1WZpc8KogCAyC
