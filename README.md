@@ -158,8 +158,7 @@ POST http://127.0.0.1:8000/api/v1/auth/login
 
 ## Header 
     accept Application/json
-    content/type Application/json 
-    Authorization Bearer "Token yang kamu dapat dari hasil login admin" 
+    content/type Application/json
 
 ## Body 
 {
@@ -177,6 +176,10 @@ Sebelum memulai test pergi ke Config/services.php lihat di bagian ini
      'device' => [
         'api_key' => 'wJNnxHjmVrd1BDQHon6SwE7IWHHeuSQs', // ubah menjadi api key yang sudah kalian generate tadi
     ],
+
+Tambahkan ini juga di env.
+kalian bisa menaruhnya di bagian paling bawah
+    API_KEY="wJNnxHjmVrd1BDQHon6SwE7IWHHeuSQs" // // ubah menjadi api key yang sudah kalian generate tadi
 
 ## Check-in Kartu Member 
 POST http://127.0.0.1:8000/api/v1/device/check-in
