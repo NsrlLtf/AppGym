@@ -21,14 +21,14 @@
 Untuk menjalankan program harus menginstall beberapa tools dan migrate Seeder dari paket gym dan superadmin untuk akses awal dan generate api key.
 ganti menjadi .env
 buat juga database dan konfigurasikan dengan .env 
-jangan lupa untuk menghapus env.example. // hapus example sisakan env. saja
+jangan lupa untuk menghapus env.example. // hapus example sisakan .env saja
 
 php artisan composer install
 php artisan composer update
-php artisan db:seed --class=PaketGym
-php artisan db:seed --classSuper=AdminSeeder
-php artisan app:generate-api-key "Device Admin"
 php artisan migrate
+php artisan db:seed --class=PaketGym
+php artisan db:seed --class=SuperAdminSeeder
+php artisan app:generate-api-key "Device Admin"
 php artisan serve
 
 
